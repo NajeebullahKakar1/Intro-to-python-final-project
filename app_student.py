@@ -171,6 +171,33 @@ def history():
         ORDER BY borrow.id DESC
     """, (session["username"],), fetchall=True)
     return render_template("history.html", records=records)
+# Only admins can access this
+@app.route("/manage_users")
+@login_required
+@admin_required
+def manage_users():
+    users = query("SELECT id, username, role FROM users", fetchall=True)
+    return render_template("manage_users.html", users=users)
+
+# Update user role or username
+@app.route("/update_user/<int:user_id>", methods=["POST"])
+@login_required
+@admin_required
+def update_user(user_id):
+    new_username = request.form.get("username")
+    new_role = request.form.get("role")
+    query("UPDATE users SET username=?, role=? WHERE id=?",
+          (new_username, new_role, user_id))
+    return redirect("/manage_users")
+
+# Delete user
+@app.route("/delete_user/<int:user_id>")
+@login_required
+@admin_required
+def delete_user(user_id):
+    query("DELETE FROM users WHERE id=?", (user_id,))
+    return redirect("/manage_users")
+
 
 
 # ---------------------- RUN ----------------------

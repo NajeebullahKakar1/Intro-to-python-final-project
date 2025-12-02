@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Users</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+    <h2>Manage Users</h2>
+    <table>
+        <tr><th>Username</th><th>Role</th><th>Actions</th></tr>
+        {% for user in users %}
+        <tr>
+            <form method="POST" action="/update_user/{{ user.id }}">
+            <td><input name="username" value="{{ user.username }}"></td>
+            <td>
+                <select name="role">
+                    <option value="user" {% if user.role=="user" %}selected{% endif %}>User</option>
+                    <option value="admin" {% if user.role=="admin" %}selected{% endif %}>Admin</option>
+                </select>
+            </td>
+            <td>
+                <button type="submit">Update</button>
+                <a href="/delete_user/{{ user.id }}" onclick="return confirm('Delete this user?')">Delete</a>
+            </td>
+            </form>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="/">Back to Dashboard</a>
+</div>
+</body>
+</html>
