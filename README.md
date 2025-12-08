@@ -16,6 +16,6 @@ Technologies Used
 - HTML, CSS 
 
 
-Admin roles are preassigned in the usernames James1 and James2. If you sign in with these usernames, you will have admin access. 
+Admin roles are preassigned in the usernames James1 and James2 (uppercase). If you sign in with these usernames, you will have admin access. 
 
 We have one app file where all our backend code is stored. We made it like this so can easily run on any device. There is also a test folder where we tested the functionality of the sites.
