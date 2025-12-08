@@ -12,77 +12,10 @@ This project is a Library Management System built using Flask. It allows librari
 
 Technologies Used
 - Python (Flask)
-- SQLite
-- HTML, CSS, JavaScript
-- Flask-WTF
-- Flask-Login
-- Flask-Bcrypt
-- Jinja Templates
-- 
-
-Project Structure
-project/
-│── app.py
-│── database.db
-│── requirements.txt
-│
-├── models/
-│   └── models.py
-│
-├── routes/
-│   └── auth.py
-│   └── books.py
-│   └── users.py
-│   └── checkout.py
-│
-├── templates/
-│   └── base.html
-│   └── login.html
-│   └── add_book.html
-│   └── edit_book.html
-│   └── search.html
-│   └── users.html
-│
-├── static/
-│   └── style.css
-│   └── script.js
-│
-└── tests/
-    └── test_app.py
-
-    
-
-Database Schema
--- Users Table
-CREATE TABLE users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT UNIQUE,
-    password TEXT,
-    role TEXT DEFAULT 'user'
-);
-
--- Books Table
-CREATE TABLE books (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT,
-    author TEXT,
-    year TEXT,
-    language TEXT,
-    available INTEGER DEFAULT 1
-);
-
--- Borrow Table
-CREATE TABLE borrow (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT,
-    book_id INTEGER,
-    status TEXT
-);
+- SQLite built in
+- HTML, CSS 
 
 
+Admin roles are preassigned in the usernames James1 and James2. If you sign in with these usernames, you will have admin access. 
 
- License / Notes
-
-This project is for educational purposes only.  
-All code and content are created by the project group members.  
-Do not copy or reuse this project for commercial purposes.
+We have one app file where all our backend code is stored. so it can easily run on any device. 
