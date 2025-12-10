@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Edit Book{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>Edit Book</h2>
+  <form method="POST">
+    <input name="title" value="{{ book.title }}" required>
+    <input name="author" value="{{ book.author }}" required>
+    <input name="year" value="{{ book.year }}" required>
+    <input name="language" value="{{ book.language }}" required>
+    <label><input type="checkbox" name="available" {% if book.available %}checked{% endif %}> Available</label>
+    <button type="submit">Save</button>
+  </form>
+</div>
+{% endblock %}

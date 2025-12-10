@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Manage Books{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>Manage Books</h2>
+  <table>
+    <tr><th>Title</th><th>Author</th><th>Year</th><th>Lang</th><th>Avail</th><th>Action</th></tr>
+    {% for b in books %}
+    <tr>
+      <td>{{ b.title }}</td><td>{{ b.author }}</td><td>{{ b.year }}</td><td>{{ b.language }}</td><td>{{ b.available }}</td>
+      <td>
+        <a href="{{ url_for('book.edit_book', book_id=b.id) }}">Edit</a> |
+        <a href="{{ url_for('book.delete_book_route', book_id=b.id) }}">Delete</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

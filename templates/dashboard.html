@@ -1,63 +1,48 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Dashboard</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-<div class="container">
-<h2>Welcome {{ session.username }}</h2>
-<div class="navlinks">
-    <a href="/">Dashboard</a> |
-    <a href="/history">Borrow History</a> |
-    {% if admin %}
-    <a href="/add_book">Add Book</a> |
-    <a href="/manage_users">Manage Users</a> |
-    {% endif %}
-    <a href="/logout">Logout</a>
-</div>
-
-
-
-<h3>Search Books</h3>
-<form method="GET" action="/">
-    <input type="text" name="q" placeholder="Search by title, author, or language">
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>Books</h2>
+  <form method="GET" action="{{ url_for('book.dashboard') }}" class="search">
+    <input name="q" placeholder="Search by title, author, year, language" value="{{ q }}">
     <button type="submit">Search</button>
-</form>
+  </form>
 
+  {% if admin %}
+  <div class="admin-add">
+    <h3>Add book (admin)</h3>
+    <form method="POST" action="{{ url_for('book.add_book_route') }}">
+      <input name="title" placeholder="Title" required>
+      <input name="author" placeholder="Author" required>
+      <input name="year" placeholder="Year" required>
+      <input name="language" placeholder="Language" required>
+      <button type="submit">Add Book</button>
+    </form>
+  </div>
+  {% endif %}
 
-{% if admin %}
-<h3>Add New Book</h3>
-<form method="POST" action="/add_book">
-<input name="title" placeholder="Title" required>
-<input name="author" placeholder="Author" required>
-<input name="year" placeholder="Year" required>
-<input name="language" placeholder="Language" required>
-<button type="submit">Add Book</button>
-</form>
-<hr>
-{% endif %}
-
-<h3>Library Books</h3>
-<table>
-<tr><th>Title</th><th>Author</th><th>Year</th><th>Language</th><th>Status</th><th>Action</th></tr>
-{% for b in books %}
-<tr>
-<td>{{ b.title }}</td>
-<td>{{ b.author }}</td>
-<td>{{ b.year }}</td>
-<td>{{ b.language }}</td>
-<td>{{ "Available" if b.available else "Borrowed" }}</td>
-<td>
-{% if b.available %}
-<a class="action-btn" href="/borrow/{{ b.id }}">Borrow</a>
-{% else %}
-<a class="action-btn return" href="/return/{{ b.id }}">Return</a>
-{% endif %}
-</td>
-</tr>
-{% endfor %}
-</table>
+  <table>
+    <tr><th>Title</th><th>Author</th><th>Year</th><th>Lang</th><th>Status</th><th>Action</th></tr>
+    {% for b in books %}
+    <tr>
+      <td>{{ b.title }}</td>
+      <td>{{ b.author }}</td>
+      <td>{{ b.year }}</td>
+      <td>{{ b.language }}</td>
+      <td>{{ "Available" if b.available else "Borrowed" }}</td>
+      <td>
+        {% if b.available %}
+          <a class="btn" href="{{ url_for('borrow.borrow', book_id=b.id) }}">Borrow</a>
+        {% else %}
+          <a class="btn return" href="{{ url_for('borrow.return_book_route', book_id=b.id) }}">Return</a>
+        {% endif %}
+        {% if admin %}
+          <a class="btn small" href="{{ url_for('book.edit_book', book_id=b.id) }}">Edit</a>
+          <a class="btn small danger" href="{{ url_for('book.delete_book_route', book_id=b.id) }}">Delete</a>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
 </div>
-</body>
-</html>
+{% endblock %}
