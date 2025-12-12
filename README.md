@@ -1,3 +1,5 @@
+**The app was written by all members of the group. For the purpose of testing we had to download and reupload everything. Check the commit history for proof.**
+
 This project is a Library Management System built using Flask. It allows librarians and library members to manage books and borrowing activities. Users can add, edit, and search books, manage member accounts, check out and return books, and view borrowing history. The system uses Flask for the backend, SQLite for the database, and HTML, CSS, and JavaScript for the frontend.
 
  Features
